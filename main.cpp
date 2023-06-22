@@ -27,10 +27,10 @@ void printhelp()
 void readfromFile(const string &filename)
 {
     ifstream file;
-    file.open(filename);
+    file.open("../"+filename);
     if (!file)
     {
-        cerr << "Fail to open" << filename << endl;
+        cerr << "Fail to open " << filename << endl;
         return;
     }
     string line;
@@ -69,8 +69,18 @@ void addwithReadline()
 }
 
 // 命令行参数添加键值对
-void addwithParm()
+void addwithParm(const string &str)
 {
+    size_t pos = str.find('=');
+    if (pos != string::npos)
+    {
+        string key, value;
+        key = str.substr(0, pos);
+        value = str.substr(pos + 1);
+        keyValues[key] = value;
+    }
+    else
+        cout << "illegal input!" << endl;
 }
 
 // 交互式查询键值对
@@ -92,8 +102,13 @@ void querywithReadline()
 }
 
 // 命令行参数查询键值对
-void querywithParm()
+void querywithParm(const string &key)
 {
+    auto it = keyValues.find(key);
+    if (it != keyValues.end())
+        cout << "Value of " << key << ": " << it->second << endl;
+    else
+        cout << "Not found value of " << key << endl;
 }
 
 // 删除键值对
@@ -124,19 +139,25 @@ void savetoFile()
 
 int main(int argc, char **argv)
 {
-    const char *options = "aqf:d:h";
+    const char *options = "a::q::f:d:h";
     string filename;
     int opt;
-    readfromFile("../backup.txt");
+    readfromFile("backup.txt");
     while ((opt = getopt(argc, argv, options)) != -1)
     {
         switch (opt)
         {
         case 'a':
-            addwithReadline();
+            if (optarg)
+                addwithParm(optarg);
+            else
+                addwithReadline();
             break;
         case 'q':
-            querywithReadline();
+            if (optarg)
+                querywithParm(optarg);
+            else
+                querywithReadline();
             break;
         case 'f':
             readfromFile(optarg);
