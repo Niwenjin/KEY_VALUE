@@ -16,8 +16,8 @@ void printhelp()
     cout << "KEY_VALUE" << endl;
     cout << "Usage:program [options]" << endl;
     cout << "options:" << endl;
-    cout << "  -a [key=value]   Add key_value pair" << endl;
-    cout << "  -q [key]         Query value for a key" << endl;
+    cout << "  -a[key=value]    Add key_value pair" << endl;
+    cout << "  -q[key]          Query value for a key" << endl;
     cout << "  -f file          Read key_value pair from file" << endl;
     cout << "  -d key           Delete a key_value pair" << endl;
     cout << "  -h               Print help massage" << endl;
