@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/key_value.dir/main.cpp.o -o key_value  -lreadline 

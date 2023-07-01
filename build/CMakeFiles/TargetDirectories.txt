@@ -1,3 +1,0 @@
-/home/Niwenjin/Projects/KEY_VALUE/build/CMakeFiles/key_value.dir
-/home/Niwenjin/Projects/KEY_VALUE/build/CMakeFiles/edit_cache.dir
-/home/Niwenjin/Projects/KEY_VALUE/build/CMakeFiles/rebuild_cache.dir
