@@ -1,18 +1,17 @@
-#include <iostream>
-#include <unordered_map>
-#include <string>
 #include <fstream>
-#include <readline/readline.h>
-#include <readline/history.h>
 #include <getopt.h>
+#include <iostream>
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <string>
+#include <unordered_map>
 
 using namespace std;
 
 unordered_map<string, string> keyValues;
 
 // 打印帮助信息
-void printhelp()
-{
+void printhelp() {
     cout << "KEY_VALUE" << endl;
     cout << "Usage:program [options]" << endl;
     cout << "options:" << endl;
@@ -24,21 +23,17 @@ void printhelp()
 }
 
 // 从文件读取键值对
-void readfromFile(const string &filename)
-{
+void readfromFile(const string &filename) {
     ifstream file;
-    file.open("../"+filename);
-    if (!file)
-    {
+    file.open("../" + filename);
+    if (!file) {
         cerr << "Fail to open " << filename << endl;
         return;
     }
     string line;
-    while (getline(file, line))
-    {
+    while (getline(file, line)) {
         size_t pos = line.find('=');
-        if (pos != string::npos)
-        {
+        if (pos != string::npos) {
             string key = line.substr(0, pos);
             string value = line.substr(pos + 1);
             keyValues[key] = value;
@@ -48,19 +43,16 @@ void readfromFile(const string &filename)
 }
 
 // 交互式添加键值对
-void addwithReadline()
-{
+void addwithReadline() {
     string key, value;
     char *input = readline("Key: ");
-    if (input)
-    {
+    if (input) {
         key = input;
         add_history(input);
         free(input);
     }
     input = readline("Value: ");
-    if (input)
-    {
+    if (input) {
         value = input;
         add_history(input);
         free(input);
@@ -69,27 +61,22 @@ void addwithReadline()
 }
 
 // 命令行参数添加键值对
-void addwithParm(const string &str)
-{
+void addwithParm(const string &str) {
     size_t pos = str.find('=');
-    if (pos != string::npos)
-    {
+    if (pos != string::npos) {
         string key, value;
         key = str.substr(0, pos);
         value = str.substr(pos + 1);
         keyValues[key] = value;
-    }
-    else
+    } else
         cout << "illegal input!" << endl;
 }
 
 // 交互式查询键值对
-void querywithReadline()
-{
+void querywithReadline() {
     string key;
     char *input = readline("Key: ");
-    if (input)
-    {
+    if (input) {
         key = input;
         add_history(input);
         free(input);
@@ -102,8 +89,7 @@ void querywithReadline()
 }
 
 // 命令行参数查询键值对
-void querywithParm(const string &key)
-{
+void querywithParm(const string &key) {
     auto it = keyValues.find(key);
     if (it != keyValues.end())
         cout << "Value of " << key << ": " << it->second << endl;
@@ -112,8 +98,7 @@ void querywithParm(const string &key)
 }
 
 // 删除键值对
-void deleteKey(const string &key)
-{
+void deleteKey(const string &key) {
     auto n = keyValues.erase(key);
     if (n)
         cout << "delete key: " << key << " successfully" << endl;
@@ -122,31 +107,25 @@ void deleteKey(const string &key)
 }
 
 // 存储键值对到文件
-void savetoFile()
-{
+void savetoFile() {
     ofstream file("../backup.txt");
-    if (!file)
-    {
+    if (!file) {
         std::cerr << "Failed to open file: backup.txt" << endl;
         return;
     }
-    for (const auto &kv : keyValues)
-    {
+    for (const auto &kv : keyValues) {
         file << kv.first << "=" << kv.second << endl;
     }
     file.close();
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     const char *options = "a::q::f:d:h";
     string filename;
     int opt;
     readfromFile("backup.txt");
-    while ((opt = getopt(argc, argv, options)) != -1)
-    {
-        switch (opt)
-        {
+    while ((opt = getopt(argc, argv, options)) != -1) {
+        switch (opt) {
         case 'a':
             if (optarg)
                 addwithParm(optarg);
